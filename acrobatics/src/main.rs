@@ -1,16 +1,16 @@
 #![feature(asm)]
 
-use std::thread::sleep;
-use std::time::{Duration, SystemTime};
-use std::io::{Write, Read, Seek, SeekFrom};
-use font8x8::{UnicodeFonts, BASIC_FONTS};
-use process_memory::{Memory, DataMember, Pid, TryIntoProcessHandle, ProcessHandle};
 
-use std::net::{TcpListener, TcpStream, Shutdown};
+
+use std::io::{Write, Read};
+
+use process_memory::{Memory};
+
+use std::net::{TcpListener};
 use message_passing::verify;
-use std::process;
-use sysinfo::{System, SystemExt, ProcessExt};
-use std::fs::{File, OpenOptions};
+
+use sysinfo::{SystemExt, ProcessExt};
+
 use nix::sys::mman::{mmap, ProtFlags, MapFlags};
 use std::os::raw::c_void;
 use nix::sys::ptrace::traceme;
@@ -23,7 +23,7 @@ fn main() {
 
 
     if let Ok(listener) = TcpListener::bind("0.0.0.0:3333") {
-        let (mut stream, addr) = listener.accept().unwrap();
+        let (mut stream, _addr) = listener.accept().unwrap();
 
         //stream.set_read_timeout(Some(Duration::from_millis(100)));
 
@@ -44,7 +44,7 @@ fn main() {
             //println!("msg received");
             if result == [0x65, 0x91, 0x9, 0x44, 0x00, 0x12, 0x8f, 0xff] {
                 let ptr = unsafe {
-                    mmap(0 as *mut c_void, bytes.len(), ProtFlags::PROT_EXEC | ProtFlags::PROT_READ | ProtFlags::PROT_WRITE, MapFlags::MAP_SHARED | MapFlags::MAP_ANONYMOUS, 0, 0).unwrap()
+                    mmap(std::ptr::null_mut::<c_void>(), bytes.len(), ProtFlags::PROT_EXEC | ProtFlags::PROT_READ | ProtFlags::PROT_WRITE, MapFlags::MAP_SHARED | MapFlags::MAP_ANONYMOUS, 0, 0).unwrap()
                 } as *mut u8;
                bytes.push(0xcc);
               //  println!("mapped {:X?}", ptr);

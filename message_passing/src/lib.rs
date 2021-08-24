@@ -2,9 +2,9 @@
 const BITMASK: u128 = 0xFFFE48D0F1;
 const PRECISION: u8 = 13;
 
-use nix::sys::ptrace::traceme;
-use std::time::{Duration, SystemTime};
-use std::sync::mpsc::RecvTimeoutError::Timeout;
+
+
+
 
 fn get_time() -> u128{
     {
@@ -47,7 +47,7 @@ pub fn sign(text: [u8; 8]) -> [u8; 16] {
 
     let time_signature = find_prime_from((current_time ^ BITMASK) as u64) as u128;
 //println!(" {}", time_signature);
-    let signed_message = (u64::from_le_bytes(text) as u128 * time_signature);
+    let signed_message = u64::from_le_bytes(text) as u128 * time_signature;
     signed_message.to_le_bytes()
 }
 

