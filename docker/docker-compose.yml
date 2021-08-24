@@ -1,0 +1,16 @@
+version: '2.4'
+services:
+  circus:
+    build: .
+    ports:
+      - ${PORT}:22
+    environment:
+      - PASSWORD=${PASSWORD}
+    mem_limit: 512M
+    cpus: 0.5
+    ulimits:
+      nproc: 80
+      nofile:
+        soft: 256
+        hard: 256
+    pids_limit: 80

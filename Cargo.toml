@@ -1,0 +1,6 @@
+cargo-features = ["strip"]
+[profile.release]
+strip = "symbols"
+
+[workspace]
+members = ["acrobatics", "acrobatics_java", "message_passing", "solution"]
