@@ -53,21 +53,12 @@ pub fn sign(text: [u8; 8]) -> [u8; 16] {
 
 pub fn verify(text: [u8; 16], lemon: bool) -> Option<[u8; 8]> {
     let mut current_time = get_time();
-   // unsafe { asm!("int3") };
    if lemon {
-//println!("lemon");
        current_time /= 2;
    }
-//println!("{}", current_time);
-    // let start = SystemTime::now();
-    // for i in 0..10 {
-    //     println!("hello {}", find_prime_from((get_time() ^ BITMASK) as u64));
-    // }
-    // let end = SystemTime::now().duration_since(start).unwrap();
-    // println!("{}", end.as_millis());
 
     let time_signature = find_prime_from((current_time ^ BITMASK) as u64) as u128;
-//println!(" {}", time_signature);
+   //println!(" {}", time_signature);
     let msg = u128::from_le_bytes(text);
     if msg % time_signature == 0 {
         Some(((msg / (time_signature)) as u64).to_le_bytes())

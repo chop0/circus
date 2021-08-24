@@ -3,4 +3,4 @@ cargo-features = ["strip"]
 strip = "symbols"
 
 [workspace]
-members = ["acrobatics", "acrobatics_java", "message_passing", "solution"]
+members = ["acrobatics", "message_passing", "solution"]
