@@ -1,2 +1,2 @@
 # circus
-the files you're interested in are probably in message_passing
+the source for the message encoding + decoding is in [message_passing/src/lib.rs](message_passing/src/lib.rs)
